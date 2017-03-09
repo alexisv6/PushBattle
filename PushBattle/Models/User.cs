@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Amazon.DynamoDBv2.DataModel;
 
 namespace PushBattle.Models
 {
+    [DynamoDBTable("PushBattleUsers")]
     public class User
     {
         [Required]
-        public string Username { get; set; }
+        [DynamoDBHashKey]
+        public string username { get; set; }
         [Required]
-        public string Password { get; set; }
-        public int TeamId { get; set; }
+        public string password { get; set; }
+        public string teamId { get; set; }
         [Required]
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        public string email { get; set; }
+        public string phoneNumber { get; set; }
     }
 }

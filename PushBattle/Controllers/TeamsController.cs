@@ -7,43 +7,35 @@ using System.Web.Http;
 using PushBattle.Models;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using Amazon.DynamoDBv2.DocumentModel;
 
 namespace PushBattle.Controllers
 {
-    public class UsersController : ApiController
+    public class TeamsController : ApiController
     {
-        AmazonDynamoDBClient dynamoClient = new AmazonDynamoDBClient();
+        
+        private AmazonDynamoDBClient dynamoClient = new AmazonDynamoDBClient();
 
         [HttpGet]
-        [Route("api/users/team/{id}")]
-        public IEnumerable<User> GetAllUsersOnTeam(string id)
+        [Route("api/teams/{id}")]
+        public IHttpActionResult GetTeam(string id)
         {
             DynamoDBContext context = new DynamoDBContext(dynamoClient);
-            List<User> allOnTeam = context.Scan<User>(
-                new ScanCondition("teamId", ScanOperator.Equal, id)).ToList();
-            return allOnTeam;
-        }
-
-        [HttpGet]
-        public IHttpActionResult GetUser(string id)
-        {
-            DynamoDBContext context = new DynamoDBContext(dynamoClient);
-            User user = context.Load<User>(id);
-            if (user == null)
+            Team team = context.Load<Team>(id);
+            if (team == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(team);
         }
 
         [HttpPost]
-        public HttpResponseMessage Post(User user)
+        [Route("api/teams")]
+        public HttpResponseMessage Post(Team team)
         {
             if (ModelState.IsValid)
             {
                 DynamoDBContext context = new DynamoDBContext(dynamoClient);
-                context.Save<User>(user);    
+                context.Save<Team>(team);
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
             else
