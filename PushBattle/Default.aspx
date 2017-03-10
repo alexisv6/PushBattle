@@ -10,10 +10,8 @@
         <h1>ASP.NET</h1>
         <p id="TextOutput" class="lead" runat="server">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
         <p>
-            <a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a>
-            <asp:Button ID="Button1" runat="server" Text="Button" />
-            <input id="Button2" type="button" value="button" onclick="GetButton()" />
-            
+            <asp:Button ID="GetUserButton" runat="server" OnClick="GetUserButton_Click" Text="Button" />
+
         </p>
     </div>
 
@@ -50,16 +48,25 @@
 
 
     <script src="Scripts/jquery-1.10.2.min.js"></script>
+                <script type="text/javascript">
+                function GetButton() {
+//                    var usrName = @HttpContext.Current.User.Identity.Name;
+                    
+                    var usrName = "test1";
+                    $.get("/api/users/" + usrName, "",
+                        function (value) {
+                            alert("Name: " + usrName);
+                            alert("Value: " + value.username);
+                        }, "json");
+                }
+            </script>
     <script type="text/javascript">
-        function simpleAlert() {
-            alert("Text");
+        
+        function simpleAlert(user) {
+            alert("Text" + user.username);
+            
         }
-        function GetButton() {
-            $.get("/api/users/test1", "",
-                function (value) {
-                    alert("Value: " + value.username);
-                }, "json")
-        }
+
         // Always have this at the end
         //$(document).ready(simpleAlert());
     </script>

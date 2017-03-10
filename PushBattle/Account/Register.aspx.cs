@@ -17,7 +17,7 @@ namespace PushBattle.Account
             var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
 
             var user = new ApplicationUser() {
-                UserName = Email.Text,
+                UserName = Username.Text,
                 Email = Email.Text
             };
 
