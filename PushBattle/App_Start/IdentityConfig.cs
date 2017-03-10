@@ -23,7 +23,16 @@ namespace PushBattle
     {
         public Task SendAsync(IdentityMessage message)
         {
+            
             // Plug in your SMS service here to send a text message.
+            return Task.FromResult(0);
+        }
+
+        public Task SendToTopicAsync(IdentityMessage message)
+        {
+
+
+
             return Task.FromResult(0);
         }
     }
@@ -45,7 +54,7 @@ namespace PushBattle
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
-
+            
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
