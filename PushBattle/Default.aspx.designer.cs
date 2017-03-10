@@ -11,7 +11,6 @@ namespace PushBattle {
     
     
     public partial class _Default {
-        
         /// <summary>
         /// TextOutput control.
         /// </summary>
