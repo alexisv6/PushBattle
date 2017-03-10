@@ -5,12 +5,19 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    
-    <div id="introcontainer" class="jumbotron">
-        <h1 class="text-primary text-center">Welcome to PushBattle</h1>
-        <h3 onclick="FakeSignIn()" class="text-warning text-center">Please register or sign in.</h3>
-        <h3 class="text-center">Push Battle is the fun way to DDoS your friends until they disable this app</h3>
-    </div>
+<div id="introcontainer" class="jumbotron">
+  <h1 class="text-primary text-center">Welcome to PushBattle</h1>
+  <h3 onclick="FakeSignIn()" class="text-warning text-center">Please register or sign in.</h3>
+  <h3 class="text-center">Push Battle is the fun way to DDoS your friends until they disable this app</h3>
+</div>
+<div class="jumbotron">
+   <h1>ASP.NET</h1>
+   <p id="TextOutput" class="lead" runat="server">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
+   <p>
+    <asp:Button ID="GetUserButton" runat="server" OnClick="GetUserButton_Click" Text="Button" />
+
+   </p>
+</div>
     <div id="contentcontainer" class="jumbotron container" style="display:none">
         <div class="row">
             <div id="sidebar" class="col-md-4">
@@ -77,6 +84,18 @@
     </div>--%>
 
     <script src="Scripts/jquery-1.10.2.min.js"></script>
+                <script type="text/javascript">
+                function GetButton() {
+//                    var usrName = @HttpContext.Current.User.Identity.Name;
+                    
+                    var usrName = "test1";
+                    $.get("/api/users/" + usrName, "",
+                        function (value) {
+                            alert("Name: " + usrName);
+                            alert("Value: " + value.username);
+                        }, "json");
+                }
+            </script>
     <script type="text/javascript">
         var token = "";
         function FakeSignIn() {
