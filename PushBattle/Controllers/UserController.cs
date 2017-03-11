@@ -43,7 +43,13 @@ namespace PushBattle.Controllers
             if (ModelState.IsValid)
             {
                 DynamoDBContext context = new DynamoDBContext(dynamoClient);
-                context.Save<User>(user);    
+                context.Save<User>(user);
+                Team dbTeam = context.Load<Team>(user.teamId);
+                if (dbTeam != null)
+                {
+                    dbTeam.members.Add(user.username);
+                    context.Save<Team>(dbTeam);
+                }
                 return new HttpResponseMessage(HttpStatusCode.Created);
             }
             else

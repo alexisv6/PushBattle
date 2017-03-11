@@ -8,6 +8,7 @@ using Owin;
 using PushBattle.Models;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2;
+using RestSharp;
 
 namespace PushBattle.Account
 {
@@ -34,23 +35,16 @@ namespace PushBattle.Account
                 //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
                 //manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
 
+
+                // create user 
                 User dbUser = new User()
                 {
                     username = user.UserName,
-                    teamId = Team.Text
+                    teamId = Team.SelectedValue
                 };
-                AmazonDynamoDBClient client = new AmazonDynamoDBClient();
-                DynamoDBContext context = new DynamoDBContext(client);
-                context.Save<User>(dbUser);
-
-                Team dbTeam = context.Load<Team>(dbUser.teamId);
-                if (dbTeam != null)
-                {
-                    dbTeam.members.Add(dbUser.username);
-                    context.Save<Team>(dbTeam);
-                }
-
-                
+                RestRequest request = new RestRequest("users/" + dbUser.username, Method.POST);
+                request.AddJsonBody(dbUser);
+                IRestResponse response = RestDispatcher.ExecuteRequest(request);
 
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
