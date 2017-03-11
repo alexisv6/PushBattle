@@ -15,7 +15,7 @@
    <p id="TextOutput" class="lead" runat="server">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
    <p>
     <asp:Button ID="GetUserButton" runat="server" OnClick="GetUserButton_Click" Text="Button" />
-
+       <asp:Button ID="DoBattle" runat="server" Text="InitiatePush" OnClick="DoBattle_Click" />
    </p>
 </div>
     <div id="contentcontainer" class="jumbotron container" style="display:none">
