@@ -15,7 +15,7 @@
    <p id="TextOutput" class="lead" runat="server">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
    <p>
     <asp:Button ID="GetUserButton" runat="server" OnClick="GetUserButton_Click" Text="Button" />
-       <asp:Button ID="DoBattle" runat="server" Text="InitiatePush" OnClick="DoBattle_Click" />
+       <%--<asp:Button ID="DoBattle" runat="server" Text="InitiatePush" OnClick="DoBattle_Click" />--%>
    </p>
 </div>
     <div id="contentcontainer" class="jumbotron container" style="display:none">
@@ -59,7 +59,13 @@
                         <p><input type="radio" name="challengeTeam" value="Blue">Blue Team</p>
                         <p><input type="radio" name="challengeTeam" value="Green">Green Team</p>
                         <p><input type="radio" name="challengeTeam" value="Yellow">YellowTeam</p>
-                        <p><button class="btn-danger">Start A War</button></p>
+                        <asp:RadioButtonList ID="ChallengeTeam" runat="server">
+                            <asp:ListItem Text="Red" Value="Red" ></asp:ListItem>
+                            <asp:ListItem Text="Blue" Value="Blue"></asp:ListItem>
+                            <asp:ListItem Text="Green" Value="Green"></asp:ListItem>
+                            <asp:ListItem Text="Yellow" Value="Yellow"></asp:ListItem>
+                        </asp:RadioButtonList><%--<p><button class="btn-danger">Start A War</button></p>--%>
+                        <p><asp:Button CssClass="btn-danger" ID="DoBattle" runat="server" Text="Start a War" OnClick="DoBattle_Click" /></p>
                     </div>
                 </div>
                 <div id="battleView">

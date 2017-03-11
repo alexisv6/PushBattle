@@ -45,6 +45,16 @@ namespace PushBattle
                 }
                 Team dbTeam = RestDispatcher.Deserialize<Team>(teamResponse);
 
+                IRestResponse battleResponse = RestDispatcher.ExecuteRequest("battles/" + dbTeam.currentBattle, Method.GET);
+                Battle dbBattle = RestDispatcher.Deserialize<Battle>(battleResponse);
+                callJavaScript("parseBattleData", battleResponse.Content);
+                //if (battleResponse.StatusCode == System.Net.HttpStatusCode.OK)
+                //{
+                 //   Battle dbBattle = RestDispatcher.Deserialize<Battle>(battleResponse);
+                  //  callJavaScript("parseBattleData", battleResponse.Content);
+
+//                }
+
                 callJavaScript("parseUserData", userResponse.Content);
                 callJavaScript("parseTeamData", teamResponse.Content);
             }
@@ -110,8 +120,7 @@ namespace PushBattle
 
         protected void DoBattle_Click(object sender, EventArgs e)
         {
-
-            PushCoordinator.DeclareBattle(getActiveUser(), "red");
+            PushCoordinator.DeclareBattle(getActiveUser(), ChallengeTeam.SelectedItem.Value);
         }
     }
 }
