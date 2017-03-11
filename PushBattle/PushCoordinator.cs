@@ -50,7 +50,7 @@ namespace PushBattle
                 return false;
             }
 
-            if (myTeam.currentBattle != 0)
+            if (myTeam.currentBattle != null)
             {
                 // We are in battle, so don't start another
                 Console.WriteLine("{0} has tried to start a battle, but {1} is already engaged in one.", apUser.UserName, myTeam.teamname);
@@ -65,7 +65,7 @@ namespace PushBattle
             }
 
             // We have the enemy team, are they in battle?
-            if (theirTeam.currentBattle != 0)
+            if (theirTeam.currentBattle == null)
             {
                 Console.WriteLine("{0} has tried to start a battle against {1}, but {1} is already in battle.", apUser.UserName, targetTeam);
                 return false;
