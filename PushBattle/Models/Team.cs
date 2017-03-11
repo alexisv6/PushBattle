@@ -16,5 +16,10 @@ namespace PushBattle.Models
         public string url { get; set; }
         [Required]
         public List<string> members { get; set; }
+
+        /// <summary>
+        /// The id of the current battle or -1 if no battle is taking place.
+        /// </summary>
+        public int currentBattle { get; set; }
     }
 }
