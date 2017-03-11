@@ -7,16 +7,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <div id="introcontainer" class="jumbotron">
   <h1 class="text-primary text-center">Welcome to PushBattle</h1>
-  <h3 onclick="FakeSignIn()" class="text-warning text-center">Please register or sign in.</h3>
   <h3 class="text-center">Push Battle is the fun way to DDoS your friends until they disable this app</h3>
-</div>
-<div class="jumbotron">
-   <h1>ASP.NET</h1>
-   <p id="TextOutput" class="lead" runat="server">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-   <p>
-    <asp:Button ID="GetUserButton" runat="server" OnClick="GetUserButton_Click" Text="Button" />
-       <%--<asp:Button ID="DoBattle" runat="server" Text="InitiatePush" OnClick="DoBattle_Click" />--%>
-   </p>
 </div>
     <div id="contentcontainer" class="jumbotron container" style="display:none">
         <div class="row">
@@ -36,7 +27,7 @@
                     </div>
                     <div id="teamInfo" class="row panel panel-default" style="display:none">
                         <div class="panel-heading">
-                            <img width="70" height="70" src="https://s3.amazonaws.com/pushbattle/cat-icon-34376.png">
+                            <img id="teamImage" width="70" height="70"/>
                         </div>
                         <div class="panel-body">
                             <ul class="list-group">
@@ -55,10 +46,6 @@
                     </div>
                     <div class="panel-body">
                         <p><label onclick="SimulateNewBattle()">Choose a team to battle:</label></p>
-                        <p><input type="radio" name="challengeTeam" value="Red">Red Team</p>
-                        <p><input type="radio" name="challengeTeam" value="Blue">Blue Team</p>
-                        <p><input type="radio" name="challengeTeam" value="Green">Green Team</p>
-                        <p><input type="radio" name="challengeTeam" value="Yellow">YellowTeam</p>
                         <asp:RadioButtonList ID="ChallengeTeam" runat="server">
                             <asp:ListItem Text="Red" Value="Red" ></asp:ListItem>
                             <asp:ListItem Text="Blue" Value="Blue"></asp:ListItem>
@@ -105,59 +92,8 @@
          </div>    
      </div>
 
-
-  <%--  <div class="jumbotron">
-        <h1>Load A Battle</h1>
-        <p class="lead">Enter the battle id below</p>
-        <input id="battleInput" type="text" value=""/>
-        <input id="loadBattle" type="button" value="Load Battle" onclick="LoadBattle()"/>
-    </div>
-
-    <div class="jumbotron">
-        <h1>Load Users By Team</h1>
-        <p class="lead">This is a test</p>
-        <input id="teamInput" type="text" value=""/>
-        <input id="loadUsersButton" type="button" value="Load Users" onclick="LoadUsers()"/>
-    </div>--%>
-
     <script src="Scripts/jquery-1.10.2.min.js"></script>
-                <script type="text/javascript">
-                function GetButton() {
-//                    var usrName = @HttpContext.Current.User.Identity.Name;
-                    
-                    var usrName = "test1";
-                    $.get("/api/users/" + usrName, "",
-                        function (value) {
-                            alert("Name: " + usrName);
-                            alert("Value: " + value.username);
-                        }, "json");
-                }
-            </script>
     <script type="text/javascript">
-        var token = "";
-        function FakeSignIn() {
-            var user = {
-                "username": "alexisv6",
-                "score": "20",
-                "phoneNumber": "5098815865"
-            }
-            parseUserData(user);
-            FakeTeam();
-        }
-
-        function FakeTeam() {
-            var team = {
-                "teamname": "firstteam",
-                "teamMembers": ["alexisv6", "test1", "test2"],
-                "losses": "2"
-            }
-            parseTeamData(team);
-            FakeBattle();
-        }
-
-        function FakeBattle() {
-            parseBattleData(null);
-        }
 
         function SimulateNewBattle() {
             var battle = {
@@ -236,7 +172,8 @@
         function parseTeamData(team) {
             $("#teamInfo").show();
             $("#teamname").html(team.teamname);
-            parseTeamMembers(team.teamMembers);
+            $("#teamImage").attr("src", team.imageUrl);
+            parseTeamMembers(team.members);
         }
 
         function parseBattleData(battle) {

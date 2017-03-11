@@ -13,13 +13,13 @@ namespace PushBattle.Models
         [Required]
         [DynamoDBHashKey]
         public string teamname { get; set; }
-        public string url { get; set; }
+        public string imageUrl { get; set; }
         [Required]
         public List<string> members { get; set; }
 
         /// <summary>
         /// The id of the current battle or -1 if no battle is taking place.
         /// </summary>
-        public int currentBattle { get; set; }
+        public string currentBattle { get; set; }
     }
 }
