@@ -6,6 +6,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using PushBattle.Models;
+using Amazon.DynamoDBv2.DataModel;
+using Amazon.DynamoDBv2;
 
 namespace PushBattle.Account
 {
@@ -22,6 +24,8 @@ namespace PushBattle.Account
                 PhoneNumber = PhoneNumber.Text
             };
 
+            
+
             IdentityResult result = manager.Create(user, Password.Text);
             if (result.Succeeded)
             {
@@ -29,8 +33,15 @@ namespace PushBattle.Account
                 //string code = manager.GenerateEmailConfirmationToken(user.Id);
                 //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
                 //manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
-                
-                
+
+                User dbUser = new User()
+                {
+                    username = user.UserName,
+                    teamId = Team.Text
+                };
+
+                DynamoDBContext context = new DynamoDBContext(new AmazonDynamoDBClient());
+                context.Save<User>(dbUser);
 
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);

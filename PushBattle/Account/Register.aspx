@@ -21,11 +21,11 @@
         </div>
         --%>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="PhoneNumber" CssClass="col-md-2 control-label">PhoneNumber</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="Team" CssClass="col-md-2 control-label">Team Name</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="PhoneNumber" CssClass="form-control" TextMode="Phone" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="PhoneNumber"
-                    CssClass="text-danger" ErrorMessage="The phone number field is required." />
+                <asp:TextBox runat="server" ID="Team" CssClass="form-control" />
+                <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="Team"
+                    CssClass="text-danger" />--%>
             </div>
         </div>
         <div class="form-group">
@@ -36,7 +36,14 @@
                     CssClass="text-danger" ErrorMessage="The username field is required." />
             </div>
         </div>
-        
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="PhoneNumber" CssClass="col-md-2 control-label">PhoneNumber</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="PhoneNumber" CssClass="form-control" TextMode="Phone" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="PhoneNumber"
+                    CssClass="text-danger" ErrorMessage="The phone number field is required." />
+            </div>
+        </div>
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
             <div class="col-md-10">
