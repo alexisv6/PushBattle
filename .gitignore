@@ -241,3 +241,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /PushBattle490/
+/.DS_Store
+/PushBattle/Migrations/Configuration.cs
