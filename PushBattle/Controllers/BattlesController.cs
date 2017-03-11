@@ -30,8 +30,10 @@ namespace PushBattle.Controllers
         [HttpPost]
         public HttpResponseMessage Post(Battle battle)
         {
+            Guid guid = Guid.NewGuid();
             if (ModelState.IsValid)
             {
+                battle.battleId = guid.ToString();
                 DynamoDBContext context = new DynamoDBContext(dynamoClient);
                 context.Save<Battle>(battle);
                 return new HttpResponseMessage(HttpStatusCode.Created);
