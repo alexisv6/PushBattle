@@ -39,9 +39,18 @@ namespace PushBattle.Account
                     username = user.UserName,
                     teamId = Team.Text
                 };
-
-                DynamoDBContext context = new DynamoDBContext(new AmazonDynamoDBClient());
+                AmazonDynamoDBClient client = new AmazonDynamoDBClient();
+                DynamoDBContext context = new DynamoDBContext(client);
                 context.Save<User>(dbUser);
+
+                Team dbTeam = context.Load<Team>(dbUser.teamId);
+                if (dbTeam != null)
+                {
+                    dbTeam.members.Add(dbUser.username);
+                    context.Save<Team>(dbTeam);
+                }
+
+                
 
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);

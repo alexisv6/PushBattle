@@ -15,7 +15,7 @@ namespace PushBattle.Models
         /// </summary>
         [Required]
         [DynamoDBHashKey]
-        public int battleId { get; set; }
+        public string battleId { get; set; }
 
         /// <summary>
         /// A string containing the username that initiated the battle.
