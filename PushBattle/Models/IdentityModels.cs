@@ -14,8 +14,6 @@ namespace PushBattle.Models
     public class ApplicationUser : IdentityUser
     {
 
-
-
         public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

@@ -17,14 +17,36 @@ namespace PushBattle
         protected void Page_Load(object sender, EventArgs e)
         {
             TextOutput.InnerText = Page.User.Identity.Name;
-            if (!Page.User.Identity.IsAuthenticated)
+            if (Page.User.Identity.IsAuthenticated)
             {
-                //User not authenticated
+                // User is authenticated
+                // Load team data
+                // Load user data
+                // Load battle data
+
+                ApplicationUser user = getActiveUser();
+                if (user == null)
+                {
+                    return;
+                }
+                string userName = user.UserName;
+
+                string url = "http://localhost:63131/api/";
+                RestClient client = new RestClient(url);
+
+
                 
+                RestRequest userRequest = new RestRequest("users/" + userName, Method.GET);
+                IRestResponse<User> response = client.Execute<User>(userRequest);
+                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    return;
+                }
+                callJavaScript("parseUsers", response.Content);
             }
             else
             {
-                // User is authenticated
+                // User not authenticated
             }
         }
 
@@ -44,6 +66,10 @@ namespace PushBattle
             string userName = user.UserName;
             RestRequest request = new RestRequest(userName, Method.GET);
             IRestResponse<User> response = client.Execute<User>(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return;
+            }
             TextOutput.InnerText = response.Data.username;
 
             callJavaScript("simpleAlert", response.Content);

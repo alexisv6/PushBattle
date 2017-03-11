@@ -13,11 +13,11 @@ namespace PushBattle.Models
         [Required]
         [DynamoDBHashKey]
         public string username { get; set; }
-        [Required]
-        public string password { get; set; }
+        //[Required]
+        //public string password { get; set; }
         public string teamId { get; set; }
-        [Required]
-        public string email { get; set; }
-        public string phoneNumber { get; set; }
+        //[Required]
+        //public string email { get; set; }
+        //public string phoneNumber { get; set; }
     }
 }
