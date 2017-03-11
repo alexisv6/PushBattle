@@ -33,7 +33,7 @@
                             <ul class="list-group">
                                 <li id="teamname" class="list-group-item"></li>
                             </ul>
-                            <h2>Team Memebers</h2>
+                            <h2>Team Members</h2>
                             <div id="teamMemebers"></div>
                         </div>
                     </div>
