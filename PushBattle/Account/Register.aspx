@@ -23,7 +23,13 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Team" CssClass="col-md-2 control-label">Team Name</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Team" CssClass="form-control" />
+                <%--<asp:TextBox runat="server" ID="Team" CssClass="form-control" />--%>
+                <asp:DropDownList runat="server" ID="Team">
+                    <asp:ListItem Text="Red" Value="Red" Selected="True"></asp:ListItem>
+                    <asp:ListItem Text="Blue" Value="Blue"></asp:ListItem>
+                    <asp:ListItem Text="Green" Value="Green"></asp:ListItem>
+                    <asp:ListItem Text="Yellow" Value="Yellow"></asp:ListItem>
+                </asp:DropDownList>
                 <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="Team"
                     CssClass="text-danger" />--%>
                 
