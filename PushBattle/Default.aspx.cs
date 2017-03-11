@@ -31,23 +31,32 @@ namespace PushBattle
                 }
                 string userName = user.UserName;
 
-                string url = "http://localhost:63131/api/";
-                RestClient client = new RestClient(url);
 
-
-                
-                RestRequest userRequest = new RestRequest("users/" + userName, Method.GET);
-                IRestResponse<User> response = client.Execute<User>(userRequest);
-                if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                IRestResponse userResponse = RestDispatcher.ExecuteRequest("users/" + userName, Method.GET);
+                if (userResponse.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     return;
                 }
-                callJavaScript("parseUsers", response.Content);
+                User dbUser = RestDispatcher.Deserialize<User>(userResponse);
+                IRestResponse teamResponse = RestDispatcher.ExecuteRequest("teams/" + dbUser.teamId, Method.GET);
+                if (teamResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    return;
+                }
+                Team dbTeam = RestDispatcher.Deserialize<Team>(teamResponse);
+
+                callJavaScript("parseUserData", userResponse.Content);
+                callJavaScript("parseTeamData", teamResponse.Content);
             }
             else
             {
                 // User not authenticated
             }
+        }
+        
+        private void loadUser(ApplicationUser current)
+        {
+
         }
 
         protected void GetUserButton_Click(object sender, EventArgs e)
@@ -103,6 +112,12 @@ namespace PushBattle
                 Page.ClientScript.RegisterStartupScript(this.GetType(),
                     function + "Alert", function + "(" + data + ");", true);
             }
+        }
+
+        protected void DoBattle_Click(object sender, EventArgs e)
+        {
+
+            PushCoordinator.DeclareBattle(getActiveUser(), "red");
         }
     }
 }

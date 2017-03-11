@@ -10,13 +10,40 @@ namespace PushBattle.Models
     [DynamoDBTable("PushBattleBattles")]
     public class Battle
     {
+        /// <summary>
+        /// The unique id that the battle can be referenced by.
+        /// </summary>
+        [Required]
         [DynamoDBHashKey]
-        public string battleId { get; set; }
+        public int battleId { get; set; }
+
+        /// <summary>
+        /// A string containing the username that initiated the battle.
+        /// </summary>
+        public string initiator { get; set; }
+        
+        /// <summary>
+        /// The time that the battle was declared.
+        /// </summary>
+        public DateTime declaration { get; set; }
+        
+        /// <summary>
+        /// The time that the battle actually began.
+        /// Typically within 2 hours of declaration.
+        /// </summary>
+        public DateTime initiation { get; set; }
+        
+        /// <summary>
+        ///  The duration, in milliseconds (or whatever it is that dotNet uses), of the battle.
+        /// </summary>
+        public long duration { get; set; }
+        
+        /// <summary>
+        /// An string array of the teams participating in the battle.
+        /// </summary>
         [Required]
-        public string redTeam { get; set; }
-        [Required]
-        public string blueTeam { get; set; }
-        public int redScore { get; set; }
-        public int blueScore { get; set; }
+        public string[] participants { get; set; }
+
+
     }
 }
