@@ -420,6 +420,7 @@
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\BattlesController.cs" />
+    <Compile Include="Controllers\ContributionsController.cs" />
     <Compile Include="Controllers\TeamsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Default.aspx.cs">
@@ -433,6 +434,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Battle.cs" />
+    <Compile Include="Models\Contribution.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="Models\User.cs" />

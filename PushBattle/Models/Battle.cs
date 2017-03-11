@@ -10,9 +10,8 @@ namespace PushBattle.Models
     [DynamoDBTable("PushBattleBattles")]
     public class Battle
     {
-        [Required]
         [DynamoDBHashKey]
-        public int battleId { get; set; }
+        public string battleId { get; set; }
         [Required]
         public string redTeam { get; set; }
         [Required]

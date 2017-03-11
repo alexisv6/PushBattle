@@ -22,43 +22,74 @@
         <div class="row">
             <div id="sidebar" class="col-md-4">
                 <div id="userView" class="container">
-                    <div id="userInfo" class="row modules">
+                    <div id="userInfo" class="row panel panel-default">
+                        <div class="panel-heading">
                             <h2 id="usernameText">User Information</h2>
-                            <ul class="list-group">
+                        </div>
+                        <div class="panel-body">
+                             <ul class="list-group">
                                 <li id="username" class="list-group-item"></li>
-                                <li id="email" class="list-group-item"></li>
-                                <li id="phone" class="list-group-item"></li>
+                                <li id="score" class="list-group-item"></li>
+                                <li class="list-group-item">Contributions<span id="contributionsAmt" class="badge"></span></li>
                             </ul>
+                        </div>
                     </div>
-                    <div id="teamInfo" class="row modules" style="display:none">
-                            <h2 id="teamText">Team Information</h2>
+                    <div id="teamInfo" class="row panel panel-default" style="display:none">
+                        <div class="panel-heading">
+                            <img width="70" height="70" src="https://s3.amazonaws.com/pushbattle/cat-icon-34376.png">
+                        </div>
+                        <div class="panel-body">
                             <ul class="list-group">
                                 <li id="teamname" class="list-group-item"></li>
-                                <li id="wins" class="list-group-item"></li>
-                                <li id="losses" class="list-group-item"></li>
                             </ul>
+                            <h2>Team Memebers</h2>
+                            <div id="teamMemebers"></div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div id="battlearea" class="col-md-8" style="display:none">
+                <div id="newBattleView" class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h2>Start a battle!</h2>
+                    </div>
+                    <div class="panel-body">
+                        <p><label onclick="SimulateNewBattle()">Choose a team to battle:</label></p>
+                        <p><input type="radio" name="challengeTeam" value="Red">Red Team</p>
+                        <p><input type="radio" name="challengeTeam" value="Blue">Blue Team</p>
+                        <p><input type="radio" name="challengeTeam" value="Green">Green Team</p>
+                        <p><input type="radio" name="challengeTeam" value="Yellow">YellowTeam</p>
+                        <p><button class="btn-danger">Start A War</button></p>
+                    </div>
+                </div>
                 <div id="battleView">
-                    <h1>Current Battle</h1>
-                    <div class="container">
-                        <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2>Current Battle</h2>
+                        </div>
+                        <div class="panel-body">
                             <div class="col-md-6">
-                                <label class="labels">Team1</label>
+                                <h2 id="team1">Team1</h2>
                             </div>
                             <div class="col-md-6">
-                                <label class="labels">Team1</label>
+                                <h2 id="team2">Team1</h2>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="panel-body">
                             <div class="col-md-6">
-                                <div id='resultsContainer' style="display:none; border:solid 3px black">
+                                <h2 id="score1"></h2>
+                            </div>
+                            <div class="col-md-6">
+                                <h2 id="score2"></h2>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <div id='resultsContainer1' style="display:none;">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div id='resultsContainer2' style="display:none; border:solid 3px black">
+                                <div id='resultsContainer2' style="display:none">
                                 </div>
                             </div>
                         </div>
@@ -101,7 +132,7 @@
         function FakeSignIn() {
             var user = {
                 "username": "alexisv6",
-                "email": "alexisv6",
+                "score": "20",
                 "phoneNumber": "5098815865"
             }
             parseUserData(user);
@@ -110,8 +141,8 @@
 
         function FakeTeam() {
             var team = {
-                "teamname": "the cool team",
-                "wins": "12",
+                "teamname": "firstteam",
+                "teamMembers": ["alexisv6", "test1", "test2"],
                 "losses": "2"
             }
             parseTeamData(team);
@@ -119,8 +150,14 @@
         }
 
         function FakeBattle() {
+            parseBattleData(null);
+        }
+
+        function SimulateNewBattle() {
             var battle = {
-                
+                "battleId": "testbattle",
+                "participants": ["firstteam", "secondteam"],
+                "scores": ["1320", "3210"]
             }
             parseBattleData(battle);
         }
@@ -134,6 +171,23 @@
             })
         }
 
+        function parseTeamMembers(data) {
+            var content = "<table class=\"table\">";
+            for (var i = 0; i < data.length; i++) {
+                if (i % 2 == 0) {
+                    content += '<tr class="success">'
+                } else {
+                    content += '<tr>';
+                }
+                content += '<td style="font-size:12px"><code>' + data[i] + '</code></td>';
+                content += '</tr>'
+            }
+            content += "</table>";
+
+            $('#teamMemebers').append(content);
+            $('#teamMemebers').show();
+        }
+
         function parseUsers(data) {
             var content = "<table class=\"table\">";
             for (var i = 0; i < data.length; i++) {
@@ -142,8 +196,8 @@
                 } else {
                     content += '<tr>';
                 }
-                content += '<td style="font-size:15px"><code>' + data[i].username + '</code></td>';
-                content += '<td style="font-size:15px"><code>' + data[i].teamId + '</code></td>';
+                content += '<td style="font-size:12px"><code>' + data[i].username + '</code></td>';
+                content += '<td style="font-size:12px"><code>' + data[i].teamId + '</code></td>';
                 content += '</tr>'
             }
             content += "</table>";
@@ -167,19 +221,73 @@
             $("#introcontainer").hide();
             $("#contentcontainer").show();
             $("#username").html("Username: " + user.username);
-            $("#email").html("Email: " + user.email);
-            $("#phone").html("Phone #: " + user.phoneNumber);
+            $("#score").html("Score: " + user.score);
+            $.get("/api/contributions/user/" + user.username, function (data) {
+                $("#contributionsAmt").html(data.length);
+            }, "json");
         }
 
         function parseTeamData(team) {
             $("#teamInfo").show();
-            $("#teamname").html("Teamname: " + team.teamname);
-            $("#wins").html("Total Wins: " + team.wins);
-            $("#losses").html("Total Losses: " + team.losses);
+            $("#teamname").html(team.teamname);
+            parseTeamMembers(team.teamMembers);
         }
 
         function parseBattleData(battle) {
             $("#battlearea").show();
+            if (battle == null) {
+                $("#battleView").hide();
+                $("#newBattleView").show();
+            } else {
+                $("#newBattleView").hide();
+                $("#battleView").show();
+                $("#team1").html(battle.participants[0]);
+                $("#team2").html(battle.participants[1]);
+                $("#score1").html("Score: " + battle.scores[0]);
+                $("#score2").html("Score: " + battle.scores[1]);
+                $.get("api/contributions/team/" + battle.participants[0] + "/battle/" + battle.battleId, function (data) {
+                    printTeam1Contributions(data);
+                });
+                $.get("api/contributions/team/" + battle.participants[1] + "/battle/" + battle.battleId, function (data) {
+                    printTeam2Contributions(data);
+                });
+            }
+        }
+
+        function printTeam1Contributions(data) {
+            var content = "<table class=\"table\">";
+            content += '<td style="font-size:20px">Contributions Made</td>';
+            for (var i = 0; i < data.length; i++) {
+                if (i % 2 == 0) {
+                    content += '<tr class="success">'
+                } else {
+                    content += '<tr>';
+                }
+                content += '<td style="font-size:12px"><code>' + data[i].username + '</code></td>';
+                content += '</tr>'
+            }
+            content += "</table>";
+
+            $('#resultsContainer1').append(content);
+            $('#resultsContainer1').show();
+        }
+
+        function printTeam2Contributions(data) {
+            var content = "<table class=\"table\">";
+            content += '<td style="font-size:20px">Contributions Made</td>';
+            for (var i = 0; i < data.length; i++) {
+                if (i % 2 == 0) {
+                    content += '<tr class="success">'
+                } else {
+                    content += '<tr>';
+                }
+                content += '<td style="font-size:12px"><code>' + data[i].username + '</code></td>';
+                content += '</tr>'
+            }
+            content += "</table>";
+
+            $('#resultsContainer2').append(content);
+            $('#resultsContainer2').show();
         }
         // Always have this at the end
         //$(document).ready(simpleAlert());
