@@ -16,7 +16,6 @@ namespace PushBattle
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            TextOutput.InnerText = Page.User.Identity.Name;
             if (Page.User.Identity.IsAuthenticated)
             {
                 // User is authenticated
@@ -83,7 +82,6 @@ namespace PushBattle
                 return;
             }
             User dbUser = RestDispatcher.Deserialize<User>(userResponse);
-            TextOutput.InnerText = "Name: " + dbUser.username + ", Team: " + dbUser.teamId;
 
             callJavaScript("simpleAlert", userResponse.Content);
         }
@@ -94,12 +92,10 @@ namespace PushBattle
         {
             if (Page.User == null)
             {
-                TextOutput.InnerText = "Page.User was null";
                 return null;
             }
             if (!Page.User.Identity.IsAuthenticated)
             {
-                TextOutput.InnerText = "User not authenticated";
                 return null;
             }
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
