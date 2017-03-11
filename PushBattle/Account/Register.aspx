@@ -26,6 +26,7 @@
                 <asp:TextBox runat="server" ID="Team" CssClass="form-control" />
                 <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="Team"
                     CssClass="text-danger" />--%>
+                
             </div>
         </div>
         <div class="form-group">

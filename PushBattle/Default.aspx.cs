@@ -61,27 +61,21 @@ namespace PushBattle
 
         protected void GetUserButton_Click(object sender, EventArgs e)
         {
-            
-            //            string url = Page.ResolveUrl("/api/users/");
-            string url = "http://localhost:63131/api/users";
-            RestClient client = new RestClient(url);
-            //string userName = "test1";
-            
+
             ApplicationUser user = getActiveUser();
             if (user == null)
             {
                 return;
             }
-            string userName = user.UserName;
-            RestRequest request = new RestRequest(userName, Method.GET);
-            IRestResponse<User> response = client.Execute<User>(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            IRestResponse userResponse = RestDispatcher.ExecuteRequest("users/" + user.UserName, Method.GET);
+            if (userResponse.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 return;
             }
-            TextOutput.InnerText = response.Data.username;
+            User dbUser = RestDispatcher.Deserialize<User>(userResponse);
+            TextOutput.InnerText = "Name: " + dbUser.username + ", Team: " + dbUser.teamId;
 
-            callJavaScript("simpleAlert", response.Content);
+            callJavaScript("simpleAlert", userResponse.Content);
         }
 
         
