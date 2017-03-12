@@ -9,6 +9,8 @@ using PushBattle.Models;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2;
 using RestSharp;
+using Amazon.SimpleNotificationService.Model;
+using Amazon.SimpleNotificationService;
 
 namespace PushBattle.Account
 {
@@ -44,7 +46,19 @@ namespace PushBattle.Account
                 };
                 RestRequest request = new RestRequest("users/" + dbUser.username, Method.POST);
                 request.AddJsonBody(dbUser);
+
                 IRestResponse response = RestDispatcher.ExecuteRequest(request);
+
+                //AmazonSimpleNotificationServiceClient snsClient = new AmazonSimpleNotificationServiceClient();
+
+                //Models.Subscription sub = RestDispatcher.ExecuteRequest<Models.Subscription>("subscriptions/" + dbUser.teamId, Method.GET);
+                //if (sub == null)
+                //{
+
+                //}
+                //SubscribeRequest subRequ = new SubscribeRequest(sub.topicARN, "sms", user.PhoneNumber);
+                //snsClient.Subscribe(subRequ);
+                
 
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);

@@ -8,6 +8,7 @@ using System.Web.Http;
 using PushBattle.Models;
 using Amazon.DynamoDBv2.DataModel;
 using Amazon.DynamoDBv2.DocumentModel;
+using RestSharp;
 
 namespace PushBattle.Controllers
 {
@@ -56,6 +57,55 @@ namespace PushBattle.Controllers
                 new ScanCondition("battleId", ScanOperator.Equal, battleId)).ToList();
             return allContributorsToBattle;
         }
+
+        [HttpGet]
+        [Route("api/contributions/{id}")]
+        public IHttpActionResult GetContribution(string id)
+        {
+            DynamoDBContext context = new DynamoDBContext(dynamoClient);
+            User dbUser = context.Load<User>(id);
+            if (dbUser == null)
+            {
+                return NotFound();
+            }
+            Team dbTeam = context.Load<Team>(dbUser.teamId);
+            if (dbTeam == null)
+            {
+                return NotFound();
+            }
+            Battle dbBattle = context.Load<Battle>(dbTeam.currentBattle);
+            if (dbBattle == null)
+            {
+                return NotFound();
+            }
+            int index = 0;
+            for (; index < dbBattle.participants.Count; index++)
+            {
+                if (dbBattle.participants[index].Equals(dbUser.teamId))
+                {
+                    break;
+                }
+            }
+            dbBattle.scores[index] += dbBattle.offsets[index];
+//            dbBattle.participants[dbUser.teamId] += 1;
+            context.Save<Battle>(dbBattle);
+
+            Guid contribGuid = new Guid();
+            Contribution newContrib = new Contribution()
+            {
+                contributionId = contribGuid.ToString(),
+                username = dbUser.username,
+                teamId = dbUser.teamId,
+                battleId = dbBattle.battleId
+            };
+            //RestRequest requ = new RestRequest("contributions/user/" + dbUser.username + "/battle/" + dbBattle.battleId, Method.GET);
+            RestRequest contribPost = new RestRequest("contributions", Method.POST);
+            contribPost.AddJsonBody(newContrib);
+            Contribution userContrib = RestDispatcher.ExecuteRequest<Contribution>(contribPost);
+
+            return Ok(userContrib);
+        }
+
 
         [HttpPost]
         public HttpResponseMessage Post(Contribution contribution)

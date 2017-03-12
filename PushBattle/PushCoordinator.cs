@@ -74,9 +74,13 @@ namespace PushBattle
             String test = "testbattle";
             var battle = new Battle();
             battle.battleId = test;
-            battle.scores = new List<int> {0, 1};
+            battle.scores = new List<int> {1, -1};
+            battle.offsets = new List<int> { 1, -1 };
             battle.initiator = dbUser.username;
             battle.participants = new List<string> { myTeam.teamname, theirTeam.teamname};
+            //battle.participants = new List<Score>();
+            //battle.participants.Add(new Score(myTeam.teamname, 0));
+            //battle.participants.Add(new Score(theirTeam.teamname, 1));
             battle.declaration = new DateTime();
             Random random = new Random();
             int extraMins = random.Next(5);

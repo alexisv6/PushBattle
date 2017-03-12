@@ -126,8 +126,32 @@ namespace PushBattle
         {
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
-            manager.SendSms(getActiveUser().Id, "A message sent through the manager");
+            //manager.SendSms(getActiveUser().Id, "http://www.google.com");
+            ApplicationUser currentUser = getActiveUser();
+            if (currentUser == null)
+            {
+                return;
+            }
+
+            User dbUser = RestDispatcher.ExecuteRequest<User>("users/" + currentUser.UserName, Method.GET);
+
+
+            IEnumerable<User> collection = RestDispatcher.ExecuteRequest<IEnumerable<User>>("users/team/" + dbUser.teamId, Method.GET);
+
+            foreach (User usr in collection)
+            {
+                ApplicationUser appUser = manager.FindByNameAsync(usr.username).Result;
+                if (appUser == null)
+                {
+                    continue;
+                }
+                manager.SendSmsAsync(appUser.Id, currentUser.UserName + 
+                    " is Pushing, would you like to contribute? If so go to " + RestDispatcher.GetApiRoot()  + "contributions/" + appUser.UserName);
+
+            }
+           
             
         }
+
     }
 }

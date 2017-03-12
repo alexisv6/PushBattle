@@ -32,13 +32,7 @@ namespace PushBattle
             PublishRequest requ = new PublishRequest(null, message.Body, message.Subject);
             requ.PhoneNumber = message.Destination;
 
-            PublishResponse resp = client.Publish(requ);
-
-            if (resp.HttpStatusCode == System.Net.HttpStatusCode.OK)
-            {
-                Console.WriteLine();
-            }
-            return Task.FromResult(0);
+            return client.PublishAsync(requ);
         }
 
         public Task SendToTopicAsync(IdentityMessage message)

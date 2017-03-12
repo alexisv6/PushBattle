@@ -65,5 +65,9 @@ namespace PushBattle
             return default(T);
         }
 
+        public static string GetApiRoot()
+        {
+            return url;
+        }
     }
 }
