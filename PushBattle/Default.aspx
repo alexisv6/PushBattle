@@ -5,9 +5,10 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="introcontainer" class="jumbotron">
+    <div id="introcontainer" class="jumbotron">
   <h1 class="text-primary text-center">Welcome to PushBattle</h1>
-  <h3 class="text-center">Push Battle is the fun way to DDoS your friends until they disable this app</h3>
+  <h3 class="text-center">Push Battle is the fun way to DDoS your friends until they disable this app<asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+        </h3>
 </div>
     <div id="contentcontainer" class="jumbotron container" style="display:none">
         <div class="row">

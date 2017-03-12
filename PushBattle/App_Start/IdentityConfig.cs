@@ -8,6 +8,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using PushBattle.Models;
 
+using Amazon.SimpleNotificationService;
+using Amazon.SimpleNotificationService.Model;
+
 namespace PushBattle
 {
     public class EmailService : IIdentityMessageService

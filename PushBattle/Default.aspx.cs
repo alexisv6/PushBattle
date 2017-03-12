@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Amazon.SimpleNotificationService;
+using Amazon.SimpleNotificationService.Model;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PushBattle.Models;
 using RestSharp;
@@ -117,6 +119,19 @@ namespace PushBattle
         protected void DoBattle_Click(object sender, EventArgs e)
         {
             PushCoordinator.DeclareBattle(getActiveUser(), ChallengeTeam.SelectedItem.Value);
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            AmazonSimpleNotificationServiceClient client = new AmazonSimpleNotificationServiceClient();
+            PublishRequest requ = new PublishRequest(null, "Message", "Subject");
+            requ.PhoneNumber = "+12087240055";
+            PublishResponse resp = client.Publish(requ);
+
+            if (resp.HttpStatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Console.WriteLine();
+            }
         }
     }
 }
