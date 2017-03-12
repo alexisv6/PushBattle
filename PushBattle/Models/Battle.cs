@@ -19,6 +19,7 @@ namespace PushBattle.Models
 
         public List<int> scores { get; set; }
 
+        public List<int> offsets { get; set; }
         /// <summary>
         /// A string containing the username that initiated the battle.
         /// </summary>
@@ -45,6 +46,8 @@ namespace PushBattle.Models
         /// </summary>
         public List<string> participants { get; set; }
 
+        //public Dictionary<string, int> participants { get; set; }
+        //public List<Score> participants { get; set; }
 
     }
 }

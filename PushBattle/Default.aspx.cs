@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Amazon.SimpleNotificationService;
+using Amazon.SimpleNotificationService.Model;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using PushBattle.Models;
 using RestSharp;
@@ -119,5 +121,37 @@ namespace PushBattle
 
             PushCoordinator.DeclareBattle(getActiveUser(), ChallengeTeam.SelectedItem.Value);
         }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+            //manager.SendSms(getActiveUser().Id, "http://www.google.com");
+            ApplicationUser currentUser = getActiveUser();
+            if (currentUser == null)
+            {
+                return;
+            }
+
+            User dbUser = RestDispatcher.ExecuteRequest<User>("users/" + currentUser.UserName, Method.GET);
+
+
+            IEnumerable<User> collection = RestDispatcher.ExecuteRequest<IEnumerable<User>>("users/team/" + dbUser.teamId, Method.GET);
+
+            foreach (User usr in collection)
+            {
+                ApplicationUser appUser = manager.FindByNameAsync(usr.username).Result;
+                if (appUser == null)
+                {
+                    continue;
+                }
+                manager.SendSmsAsync(appUser.Id, currentUser.UserName + 
+                    " is Pushing, would you like to contribute? If so go to " + RestDispatcher.GetApiRoot()  + "contributions/" + appUser.UserName);
+
+            }
+           
+            
+        }
+
     }
 }

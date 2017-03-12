@@ -5,9 +5,10 @@
 </asp:Content>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="introcontainer" class="jumbotron">
+    <div id="introcontainer" class="jumbotron">
   <h1 class="text-primary text-center">Welcome to PushBattle</h1>
-  <h3 class="text-center">Push Battle is the fun way to DDoS your friends until they disable this app</h3>
+  <h3 class="text-center">Push Battle is the fun way to DDoS your friends until they disable this app
+        </h3>
 </div>
     <div id="contentcontainer" class="jumbotron container" style="display:none">
         <div class="row">
@@ -23,6 +24,7 @@
                                 <li id="score" class="list-group-item"></li>
                                 <li class="list-group-item">Contributions<span id="contributionsAmt" class="badge"></span></li>
                             </ul>
+                            <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
                         </div>
                     </div>
                     <div id="teamInfo" class="row panel panel-default" style="display:none">
@@ -186,8 +188,8 @@
                 $("#battleView").show();
                 $("#team1").html(battle.participants[0]);
                 $("#team2").html(battle.participants[1]);
-                $("#score1").html("Score: " + battle.scores[0]);
-                $("#score2").html("Score: " + battle.scores[1]);
+                $("#score1").html("Score: " + ((battle.scores[0] - battle.offsets[0])*battle.offsets[0]));
+                $("#score2").html("Score: " + ((battle.scores[1] - battle.offsets[1])*battle.offsets[1]));
                 $.get("api/contributions/team/" + battle.participants[0] + "/battle/" + battle.battleId, function (data) {
                     printTeam1Contributions(data);
                 });

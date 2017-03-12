@@ -8,6 +8,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using PushBattle.Models;
 
+using Amazon.SimpleNotificationService;
+using Amazon.SimpleNotificationService.Model;
+
 namespace PushBattle
 {
     public class EmailService : IIdentityMessageService
@@ -25,7 +28,11 @@ namespace PushBattle
         {
             // Plug in your SMS service here to send a text message.
 
-            return Task.FromResult(0);
+            AmazonSimpleNotificationServiceClient client = new AmazonSimpleNotificationServiceClient();
+            PublishRequest requ = new PublishRequest(null, message.Body, message.Subject);
+            requ.PhoneNumber = message.Destination;
+
+            return client.PublishAsync(requ);
         }
 
         public Task SendToTopicAsync(IdentityMessage message)
