@@ -123,15 +123,10 @@ namespace PushBattle
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            AmazonSimpleNotificationServiceClient client = new AmazonSimpleNotificationServiceClient();
-            PublishRequest requ = new PublishRequest(null, "Message", "Subject");
-            requ.PhoneNumber = "+12087240055";
-            PublishResponse resp = client.Publish(requ);
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
-            if (resp.HttpStatusCode == System.Net.HttpStatusCode.OK)
-            {
-                Console.WriteLine();
-            }
+            manager.SendSms(getActiveUser().Id, "A message sent through the manager");
+            
         }
     }
 }

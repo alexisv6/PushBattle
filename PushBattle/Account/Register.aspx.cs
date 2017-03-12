@@ -35,7 +35,7 @@ namespace PushBattle.Account
                 //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
                 //manager.SendEmail(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
 
-
+                
                 // create user 
                 User dbUser = new User()
                 {

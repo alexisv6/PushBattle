@@ -28,6 +28,16 @@ namespace PushBattle
         {
             // Plug in your SMS service here to send a text message.
 
+            AmazonSimpleNotificationServiceClient client = new AmazonSimpleNotificationServiceClient();
+            PublishRequest requ = new PublishRequest(null, message.Body, message.Subject);
+            requ.PhoneNumber = message.Destination;
+
+            PublishResponse resp = client.Publish(requ);
+
+            if (resp.HttpStatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Console.WriteLine();
+            }
             return Task.FromResult(0);
         }
 
