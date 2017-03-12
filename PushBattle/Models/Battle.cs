@@ -17,6 +17,8 @@ namespace PushBattle.Models
         [DynamoDBHashKey]
         public string battleId { get; set; }
 
+        public List<int> scores { get; set; }
+
         /// <summary>
         /// A string containing the username that initiated the battle.
         /// </summary>
@@ -41,8 +43,7 @@ namespace PushBattle.Models
         /// <summary>
         /// An string array of the teams participating in the battle.
         /// </summary>
-        [Required]
-        public string[] participants { get; set; }
+        public List<string> participants { get; set; }
 
 
     }
