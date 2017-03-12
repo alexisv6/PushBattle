@@ -116,6 +116,7 @@ namespace PushBattle
 
         protected void DoBattle_Click(object sender, EventArgs e)
         {
+
             PushCoordinator.DeclareBattle(getActiveUser(), ChallengeTeam.SelectedItem.Value);
         }
     }

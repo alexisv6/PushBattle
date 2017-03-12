@@ -121,7 +121,7 @@
                 } else {
                     content += '<tr>';
                 }
-                content += '<td style="font-size:12px"><code>' + data[i] + '</code></td>';
+                content += '<td style="font-size:10px"><code>' + data[i] + '</code></td>';
                 content += '</tr>'
             }
             content += "</table>";
@@ -138,8 +138,8 @@
                 } else {
                     content += '<tr>';
                 }
-                content += '<td style="font-size:12px"><code>' + data[i].username + '</code></td>';
-                content += '<td style="font-size:12px"><code>' + data[i].teamId + '</code></td>';
+                content += '<td style="font-size:10px"><code>' + data[i].username + '</code></td>';
+                content += '<td style="font-size:10px"><code>' + data[i].teamId + '</code></td>';
                 content += '</tr>'
             }
             content += "</table>";
@@ -206,7 +206,7 @@
                 } else {
                     content += '<tr>';
                 }
-                content += '<td style="font-size:12px"><code>' + data[i].username + '</code></td>';
+                content += '<td style="font-size:10px"><code>' + data[i].username + '</code></td>';
                 content += '</tr>'
             }
             content += "</table>";
@@ -224,7 +224,7 @@
                 } else {
                     content += '<tr>';
                 }
-                content += '<td style="font-size:12px"><code>' + data[i].username + '</code></td>';
+                content += '<td style="font-size:10px"><code>' + data[i].username + '</code></td>';
                 content += '</tr>'
             }
             content += "</table>";
