@@ -188,8 +188,8 @@
                 $("#battleView").show();
                 $("#team1").html(battle.participants[0]);
                 $("#team2").html(battle.participants[1]);
-                $("#score1").html("Score: " + ((battle.scores[0] - battle.offsets[0])*battle.offsets[0]));
-                $("#score2").html("Score: " + ((battle.scores[1] - battle.offsets[1])*battle.offsets[1]));
+                $("#score1").html("Score: " + ((battle.scores[0] )*battle.offsets[0]));
+                $("#score2").html("Score: " + ((battle.scores[1] )*battle.offsets[1]));
                 $.get("api/contributions/team/" + battle.participants[0] + "/battle/" + battle.battleId, function (data) {
                     printTeam1Contributions(data);
                 });
